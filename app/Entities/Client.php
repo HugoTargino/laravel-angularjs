@@ -1,6 +1,6 @@
 <?php
 
-namespace AppLaravel;
+namespace AppLaravel\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 

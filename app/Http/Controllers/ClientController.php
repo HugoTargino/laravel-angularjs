@@ -2,7 +2,9 @@
 
 namespace AppLaravel\Http\Controllers;
 
-use AppLaravel\Client;
+use AppLaravel\Entities\Client;
+use AppLaravel\Repositories\ClientRepository;
+use AppLaravel\Repositories\ClientRepositoryEloquent;
 use Illuminate\Http\Request;
 
 use AppLaravel\Http\Requests;
@@ -12,16 +14,21 @@ class ClientController extends Controller
 {
 
     private $client;
+    /**
+     * @var ClientRepositoryEloquent
+     */
+    private $repository;
 
 
-    public function __construct(Client $client)
+    public function __construct(ClientRepository $repository)
     {
-        $this->client = $client;
+
+        $this->repository = $repository;
     }
 
     public function index()
     {
-        return $this->client->all();
+        return $this->repository->all();
     }
 
     /**

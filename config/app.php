@@ -137,6 +137,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -144,6 +146,7 @@ return [
         AppLaravel\Providers\AuthServiceProvider::class,
         AppLaravel\Providers\EventServiceProvider::class,
         AppLaravel\Providers\RouteServiceProvider::class,
+        AppLaravel\Providers\RepositoryProvider::class,
 
     ],
 
