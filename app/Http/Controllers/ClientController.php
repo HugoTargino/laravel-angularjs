@@ -2,28 +2,34 @@
 
 namespace AppLaravel\Http\Controllers;
 
-use AppLaravel\Entities\Client;
-use AppLaravel\Repositories\ClientRepository;
-use AppLaravel\Repositories\ClientRepositoryEloquent;
-use Illuminate\Http\Request;
 
+use AppLaravel\Repositories\ClientRepository;
+use AppLaravel\Services\ClientService;
+use Illuminate\Http\Request;
 use AppLaravel\Http\Requests;
-use AppLaravel\Http\Controllers\Controller;
 
 class ClientController extends Controller
 {
 
-    private $client;
+
     /**
      * @var ClientRepositoryEloquent
      */
+
     private $repository;
 
+    /**
+     * @var ClientService
+     */
 
-    public function __construct(ClientRepository $repository)
+    private $service;
+
+
+    public function __construct(ClientRepository $repository, ClientService $service)
     {
 
         $this->repository = $repository;
+        $this->service = $service;
     }
 
     public function index()
@@ -49,7 +55,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->client->create($request->all());
+        return $this->service->create($request->all());
     }
 
     /**
@@ -60,7 +66,7 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        return $this->client->find($id);
+        return $this->repository->find($id);
     }
 
     /**
@@ -83,8 +89,8 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->client->find($id)->update($request->all());
-        return $this->client->find($id);
+        return $this->service->update($request->all(), $id);
+
     }
 
     /**
@@ -95,6 +101,6 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $this->client->find($id)->delete();
+        return $this->repository->delete($id);
     }
 }
