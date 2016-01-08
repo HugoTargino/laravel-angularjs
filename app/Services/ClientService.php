@@ -51,7 +51,7 @@ class ClientService
 
             return [
                 'error' => true,
-                'message' => $e->getMessage()
+                'message' => $e->getMessageBag()
             ];
         }
 
@@ -68,7 +68,7 @@ class ClientService
 
             return [
                 'error' => true,
-                'message' => $e->getMessage()
+                'message' => $e->getMessageBag()
             ];
         }
 
