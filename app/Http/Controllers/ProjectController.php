@@ -8,6 +8,8 @@ use AppLaravel\Repositories\ProjectRepository;
 use AppLaravel\Services\ProjectService;
 use Illuminate\Http\Request;
 use AppLaravel\Http\Requests;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
+
 
 class ProjectController extends Controller
 {
@@ -67,6 +69,13 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
+
+        $userId = Authorizer::getResourceOwnerId(); // pega o id do user logado pelo oauth2
+
+        if($this->repository->isOwner($id, $userId) == false){  // caso seja false não será mostrado os dados do projeto
+            return ['success' => 'false'];
+        }
+
         return $this->repository->find($id);
     }
 
