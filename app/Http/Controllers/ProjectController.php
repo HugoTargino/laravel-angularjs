@@ -70,7 +70,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        if($this->checkProjectOwner($id) == false){
+        if($this->checkProjectPermissions($id) == false){
             return ['error' => 'Access Forbidden'];
         }
 
@@ -128,5 +128,24 @@ class ProjectController extends Controller
         return $this->repository->isOwner($projectId, $userId);
 
 
+    }
+
+    private function checkProjectMember($projectId)
+    {
+
+        $userId = Authorizer::getResourceOwnerId();
+
+        return $this->repository->hasMember($projectId, $userId);
+
+
+    }
+
+    private function checkProjectPermissions($projectId)
+    {
+        if($this->checkProjectOwner($projectId) or $this->checkProjectMember($projectId)){
+            return true;
+        }
+
+        return false;
     }
 }
